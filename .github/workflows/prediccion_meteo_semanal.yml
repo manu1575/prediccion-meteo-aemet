@@ -29,8 +29,11 @@ jobs:
           import pytz
       
           now = datetime.now(pytz.timezone("Europe/Madrid"))
-          ejecutar = now.hour == 23 # Cambiar a ejecutar = True para ejecución ya, sino a la hora determinada ejecutar = now.hour == 23
-      
+          #ejecutar = now.hour == 23 # Cambiar a ejecutar = True para ejecución ya, sino a la hora determinada ejecutar = now.hour == 23
+          es_hora = now.hour == 23
+          es_manual = "${{ github.event_name }}" == "workflow_dispatch"
+          ejecutar = es_hora or es_manual
+          
           with open("${GITHUB_OUTPUT}", "a") as f:
               f.write(f"ejecutar={str(ejecutar).lower()}\n")
       
