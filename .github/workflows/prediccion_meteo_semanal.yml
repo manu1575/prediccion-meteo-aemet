@@ -27,19 +27,21 @@ jobs:
           python - <<EOF
           from datetime import datetime
           import pytz
+
           now = datetime.now(pytz.timezone("Europe/Madrid"))
-          if now.hour == 23:
-              print("EJECUTAR=true")
-          else:
-              print("EJECUTAR=true")
+          ejecutar = now.hour == True
+
+          with open("${GITHUB_OUTPUT}", "a") as f:
+            f.write(f"ejecutar={str(ejecutar).lower()}\n")
           EOF
 
+
       - name: Generar PDF
-        if: contains(steps.hora.outputs.stdout, 'EJECUTAR=true')
+        if: steps.hora.outputs.ejecutar == 'true'
         run: python scripts/generar_prediccion_meteo_pdf.py
 
       - name: Enviar email
-        if: contains(steps.hora.outputs.stdout, 'EJECUTAR=true')
+        if: steps.hora.outputs.ejecutar == 'true'
         env:
           SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
