@@ -1,0 +1,49 @@
+name: Predicción meteorológica semanal
+
+on:
+  schedule:
+    - cron: "0 * * * 0"   # Cada domingo, cada hora (UTC)
+  workflow_dispatch:
+
+jobs:
+  generar_y_enviar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Instalar dependencias
+        run: |
+          pip install -r requirements.txt
+
+      - name: Comprobar hora Madrid
+        id: hora
+        run: |
+          python - <<EOF
+          from datetime import datetime
+          import pytz
+          now = datetime.now(pytz.timezone("Europe/Madrid"))
+          if now.hour == 23:
+              print("EJECUTAR=true")
+          else:
+              print("EJECUTAR=false")
+          EOF
+
+      - name: Generar PDF
+        if: contains(steps.hora.outputs.stdout, 'EJECUTAR=true')
+        run: python scripts/generar_prediccion_meteo_pdf.py
+
+      - name: Enviar email
+        if: contains(steps.hora.outputs.stdout, 'EJECUTAR=true')
+        env:
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          EMAIL_DESTINO: ${{ secrets.EMAIL_DESTINO }}
+        run: python scripts/enviar_email.py
