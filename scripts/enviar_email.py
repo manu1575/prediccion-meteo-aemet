@@ -6,7 +6,7 @@ def enviar_email(pdf_path):
     msg = EmailMessage()
     msg["Subject"] = "Predicción meteorológica semanal"
     msg["From"] = os.environ["SMTP_USER"]
-    msg["To"] = os.environ["EMAIL_DESTINO"]
+    msg["To"] = os.environ["EMAIL_RECEIVER"]
     msg.set_content("Adjunto informe meteorológico semanal.")
 
     with open(pdf_path, "rb") as f:
