@@ -28,8 +28,8 @@ jobs:
           from datetime import datetime
           import pytz
       
-          #now = datetime.now(pytz.timezone("Europe/Madrid"))
-          ejecutar = True # Cambiar a ejecutar = True para ejecución ya, sino a la hora determinada ejecutar = now.hour == 23
+          now = datetime.now(pytz.timezone("Europe/Madrid"))
+          ejecutar = now.hour == 23 # Cambiar a ejecutar = True para ejecución ya, sino a la hora determinada ejecutar = now.hour == 23
       
           with open("${GITHUB_OUTPUT}", "a") as f:
               f.write(f"ejecutar={str(ejecutar).lower()}\n")
