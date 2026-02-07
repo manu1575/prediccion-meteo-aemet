@@ -31,7 +31,7 @@ jobs:
           if now.hour == 23:
               print("EJECUTAR=true")
           else:
-              print("EJECUTAR=false")
+              print("EJECUTAR=true")
           EOF
 
       - name: Generar PDF
