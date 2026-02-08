@@ -20,15 +20,16 @@ def generar_pdf():
 
     municipalities = {
         "Zaragoza": "/xml/municipios/localidad_50297.xml",
-        "Lleida": "/xml/municipios/localidad_25120.xml",
-        "Calaf": "/xml/municipios/localidad_08031.xml",
-        "Calamocha": "/xml/municipios/localidad_44050.xml",
         "Cariñena": "/xml/municipios/localidad_50073.xml",
+        "Calamocha": "/xml/municipios/localidad_44050.xml",
         "Huesca": "/xml/municipios/localidad_22125.xml",
         "Jaca": "/xml/municipios/localidad_22130.xml",
         "Canfranc": "/xml/municipios/localidad_22078.xml",
         "Caspe": "/xml/municipios/localidad_50074.xml",
-        "Fayón": "/xml/municipios/localidad_50105.xml"
+        "Fayón": "/xml/municipios/localidad_50105.xml",
+        "Lleida": "/xml/municipios/localidad_25120.xml",
+        "Calaf": "/xml/municipios/localidad_08031.xml",
+        "Vinaixa": "/xml/municipios/localidad_25255.xml"
     }
 
     semana = semana_iso_siguiente()
@@ -40,7 +41,7 @@ def generar_pdf():
     doc = SimpleDocTemplate(
         pdf_file,
         pagesize=A4,
-        leftMargin=1.5 * cm,
+        leftMargin=1.3 * cm,
         rightMargin=0.8 * cm,
         topMargin=1 * cm,
         bottomMargin=1 * cm
@@ -68,7 +69,7 @@ def generar_pdf():
         story.append(Paragraph(f"<b>{nombre}</b>", styles["Subtitulo"]))
         story.append(Spacer(1, 4))
 
-        tabla = [["Fecha", "T. Máx", "T. Mín", "Precip (%)", "Cielo", "Viento", "Km/h"]]
+        tabla = [["Fecha", "Tª. Máx", "Tª. Mín", "Prob. precip. (%)", "Cielo", "Dir. viento", "Viento km/h"]]
 
         for dia in root.findall(".//dia"):
             fecha = dia.get("fecha", "-")
@@ -86,7 +87,7 @@ def generar_pdf():
                 t(dia.find(".//viento/velocidad")),
             ])
 
-        t_obj = Table(tabla, colWidths=[2*cm,1*cm,1*cm,2*cm,5*cm,1.5*cm,1.5*cm])
+        t_obj = Table(tabla, colWidths=[2*cm,1.02*cm,1.02*cm,2.02*cm,5*cm,1.6*cm,1.8*cm])
         t_obj.setStyle(TableStyle([
             ("GRID", (0,0), (-1,-1), 0.25, colors.grey),
             ("BACKGROUND", (0,0), (-1,0), colors.lightgrey),
