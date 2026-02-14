@@ -88,7 +88,7 @@ def generar_pdf():
                 t(dia.find(".//viento/velocidad")),
             ])
 
-        t_obj = Table(tabla, colWidths=[2*cm,1.02*cm,1.02*cm,2.06*cm,5*cm,1.6*cm,1.8*cm])
+        t_obj = Table(tabla, colWidths=[2*cm,1.02*cm,1.02*cm,2.12*cm,5*cm,1.6*cm,1.8*cm])
         t_obj.setStyle(TableStyle([
             ("GRID", (0,0), (-1,-1), 0.25, colors.grey),
             ("BACKGROUND", (0,0), (-1,0), colors.lightgrey),
