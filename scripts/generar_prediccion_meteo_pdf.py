@@ -27,6 +27,7 @@ def generar_pdf():
         "Canfranc": "/xml/municipios/localidad_22078.xml",
         "Caspe": "/xml/municipios/localidad_50074.xml",
         "Fayón": "/xml/municipios/localidad_50105.xml",
+        "Sariñena": "/xml/municipios/localidad_22213.xml",
         "Lleida": "/xml/municipios/localidad_25120.xml",
         "Calaf": "/xml/municipios/localidad_08031.xml",
         "Vinaixa": "/xml/municipios/localidad_25255.xml"
@@ -69,7 +70,7 @@ def generar_pdf():
         story.append(Paragraph(f"<b>{nombre}</b>", styles["Subtitulo"]))
         story.append(Spacer(1, 4))
 
-        tabla = [["Fecha", "Tª. Máx", "Tª. Mín", "Prob. precip. (%)", "Cielo", "Dir. viento", "Viento km/h"]]
+        tabla = [["Fecha", "Tª. Máx", "Tª. Mín", "Probabilidad\nprecipitaciones (%)", "Cielo", "Dir. viento", "Viento\n(km/h)"]]
 
         for dia in root.findall(".//dia"):
             fecha = dia.get("fecha", "-")
@@ -87,7 +88,7 @@ def generar_pdf():
                 t(dia.find(".//viento/velocidad")),
             ])
 
-        t_obj = Table(tabla, colWidths=[2*cm,1.02*cm,1.02*cm,2.02*cm,5*cm,1.6*cm,1.8*cm])
+        t_obj = Table(tabla, colWidths=[2*cm,1.02*cm,1.02*cm,2.06*cm,5*cm,1.6*cm,1.8*cm])
         t_obj.setStyle(TableStyle([
             ("GRID", (0,0), (-1,-1), 0.25, colors.grey),
             ("BACKGROUND", (0,0), (-1,0), colors.lightgrey),
