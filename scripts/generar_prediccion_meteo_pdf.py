@@ -29,8 +29,8 @@ def generar_pdf():
         "Fayón": "/xml/municipios/localidad_50105.xml",
         "Sariñena": "/xml/municipios/localidad_22213.xml",
         "Lleida": "/xml/municipios/localidad_25120.xml",
-        "Calaf": "/xml/municipios/localidad_08031.xml",
-        "Vinaixa": "/xml/municipios/localidad_25255.xml"
+        "Vinaixa": "/xml/municipios/localidad_25255.xml",
+        "Calaf": "/xml/municipios/localidad_08031.xml"
     }
 
     semana = semana_iso_siguiente()
