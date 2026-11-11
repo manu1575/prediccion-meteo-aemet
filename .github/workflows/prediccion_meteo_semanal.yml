@@ -27,18 +27,19 @@ jobs:
           python - <<EOF
           from datetime import datetime
           import pytz
-      
+
           now = datetime.now(pytz.timezone("Europe/Madrid"))
-          #ejecutar = now.hour == 23 # Cambiar a ejecutar = True para ejecución ya, sino a la hora determinada ejecutar = now.hour == 23
-          es_hora = now.hour == 23
+          # Acepta las 23h y cubre posibles retrasos de GitHub hasta las 03:59h
+          es_hora = now.hour in [23, 0, 1, 2, 3, 4]
           es_manual = "${{ github.event_name }}" == "workflow_dispatch"
           ejecutar = es_hora or es_manual
-          
+
           with open("${GITHUB_OUTPUT}", "a") as f:
               f.write(f"ejecutar={str(ejecutar).lower()}\n")
-      
+
           print(f"Hora Madrid: {now.strftime('%H:%M')}, ejecutar={ejecutar}")
           EOF
+
 
 
 
